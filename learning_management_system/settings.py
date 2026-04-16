@@ -31,7 +31,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # TODO: Add each apps config here
+    'accounts',
+    'announcements',
+    'assignments',
+    'core',
+    'courses',
+    'grades',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
