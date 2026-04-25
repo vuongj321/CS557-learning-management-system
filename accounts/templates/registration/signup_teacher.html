@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Teacher Signup</title>
+  </head>
+  <body>
+    <h1>Teacher Signup</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Sign up as Teacher</button>
+    </form>
+    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+  </body>
+</html>

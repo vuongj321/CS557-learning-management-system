@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'lms_db',
         'USER': 'lms_user',
-        'PASSWORD': '<your_password>',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -112,6 +112,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Custom user model
+AUTH_USER_MODEL = 'accounts.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/

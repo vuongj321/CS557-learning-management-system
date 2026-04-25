@@ -45,9 +45,11 @@ A Django-based learning management system.
 1. **Create database and user**
 
    ```sql
+   DROP USER IF EXISTS 'lms_user';
+   DROP DATABASE IF EXISTS lms_db;
    CREATE DATABASE lms_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-   CREATE USER 'lms_user'@'localhost' IDENTIFIED BY '<your_password>'; -- replace <your_password> with a secure password
-   GRANT ALL PRIVILEGES ON lms_db.* TO 'lms_user'@'localhost'; -- This is only for local development
+   CREATE USER 'lms_user' IDENTIFIED BY 'password'; -- replace <your_password> with a secure password
+   GRANT ALL PRIVILEGES ON lms_db.* TO 'lms_user'; -- This is only for local development
    FLUSH PRIVILEGES;
    ```
 
