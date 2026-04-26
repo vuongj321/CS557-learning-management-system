@@ -1,16 +1,79 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Student Signup</title>
-  </head>
-  <body>
-    <h1>Student Signup</h1>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Sign up as Student</button>
-    </form>
-    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
-  </body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %} 
+<title>Student Signup</title>
+{% endblock title %}
+
+{% block styles %}
+  <style>
+    body {
+      background-color: lightblue;
+    }
+    .login-card {
+      min-height: 100vh;
+    }
+    .login-card .card {
+      width: 500px;
+    }
+    button {
+      float: right;
+    }
+    .errorlist, .error {
+      list-style: none;
+      color: red;
+    }
+    #usernameHelp, #password2Help, .password-help {
+      font-size: small;
+      color: lightgray;
+    }
+    ul {
+      list-style: none;
+    }
+  </style>
+{% endblock styles %}
+
+{% block app %}
+  <div class="login-card d-flex justify-content-center align-items-center flex-column">
+    <div class="card shadow">
+      <div class="card-body">
+        <h5 class="card-title mb-4">Student Signup</h5>
+        <form method="post">
+          {% csrf_token %}
+          <div class="row mb-3">
+            <label for="id_username" class="col-sm-3 col-form-label">Username</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="username" required="" id="id_username" />
+            </div>
+            <div id="usernameHelp" class="form-text">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
+            {{ form.username.errors }}
+          </div>
+          <div class="row mb-3">
+            <label for="id_email" class="col-sm-3 col-form-label">Email address</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" name="email" required="" value="" maxlength="254" id="id_email">
+            </div>
+            {{ form.email.errors }}
+          </div>
+          <div class="row mb-3">
+            <label for="id_password" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9">
+              <input type="password" name="password1" autocomplete="current-password" required="" class="form-control" id="id_password" />
+            </div>
+            <ul class="password-help"><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul>
+            {{ form.password1.errors }}
+          </div>
+          <div class="row mb-3">
+            <label for="id_password2" class="col-sm-3 col-form-label">Password confirmation</label>
+            <div class="col-sm-9">
+              <input type="password" name="password2" autocomplete="new-password" required="" class="form-control" id="id_password2" />
+            </div>
+            <div id="password2Help" class="form-text">Enter the same password as before, for verification.</div>
+            {{ form.password2.errors }}
+          </div>
+          {{ form.non_field_errors }}
+          <button type="submit" class="btn btn-primary">Signup</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock app %}
