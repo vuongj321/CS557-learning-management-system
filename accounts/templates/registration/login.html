@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+<title>Login</title>
+{% endblock title %}
+
+{% block styles %}
+  <style>
+    body {
+      background-color: lightblue;
+    }
+    .login-card {
+      min-height: 100vh;
+    }
+    .login-card .card {
+      width: 500px;
+    }
+    button {
+      float: right;
+    }
+    .errorlist {
+      list-style: none;
+      color: red;
+    }
+  </style>
+{% endblock %}
+
+{% block app %}
+  <div class="login-card d-flex justify-content-center align-items-center flex-column">
+    <div class="card shadow">
+      <div class="card-body">
+        <h5 class="card-title mb-4">Login</h5>
+        <form method="post">
+          {% csrf_token %}
+          <div class="row mb-3">
+            <label for="id_username" class="col-sm-3 col-form-label">Username</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="username" required="" id="id_username" />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="id_password" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9">
+              <input type="password" name="password" autocomplete="current-password" required="" class="form-control" id="id_password" />
+            </div>
+          </div>
+          {% if form.errors %}
+            {% for field in form %}
+              {% for error in field.errors %}
+                <div class="error">{{ error }}</div>
+              {% endfor %}
+            {% endfor %}
+            {{ form.non_field_errors }}
+          {% endif %}
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+    </div>
+    <p>
+      Sign up as <a href="{% url 'signup-student' %}">Student</a> or <a href="{% url 'signup-teacher' %}">Teacher</a>.
+    </p>
+  </div>
+{% endblock %}
