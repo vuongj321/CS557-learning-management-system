@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
-from .models import User, StudentProfile, TeacherProfile
+from .models import User, StudentProfile, InstructorProfile
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -30,15 +30,15 @@ class StudentSignupForm(UserCreationForm):
         return user
 
 
-class TeacherSignupForm(UserCreationForm):
+class InstructorSignupForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username', 'email')
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.role = 'teacher'
+        user.role = 'instructor'
         if commit:
             user.save()
-            TeacherProfile.objects.create(user=user)
+            InstructorProfile.objects.create(user=user)
         return user

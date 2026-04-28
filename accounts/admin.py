@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
-from .models import User, StudentProfile, TeacherProfile
+from .models import User, StudentProfile, InstructorProfile
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 
@@ -20,6 +20,6 @@ class StudentProfileAdmin(admin.ModelAdmin):
 	list_display = ('user',)
 
 
-@admin.register(TeacherProfile)
-class TeacherProfileAdmin(admin.ModelAdmin):
+@admin.register(InstructorProfile)
+class InstructorProfileAdmin(admin.ModelAdmin):
 	list_display = ('user',)
