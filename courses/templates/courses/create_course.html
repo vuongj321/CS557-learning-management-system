@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  <title>Create Course - Learning Management System</title>
+{% endblock %}
+
+{% block content %}
+  <h1>Create New Course</h1>
+  <form method="post">
+    {% csrf_token %}
+    <!-- Add your form fields here -->
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+{% endblock %}
