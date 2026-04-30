@@ -42,3 +42,7 @@ def create_course(request):
 
 def enroll_course(request):
     return render(request, 'courses/enroll_course.html')
+
+def view_course(request, course_id):
+    course = Course.objects.get(id=course_id)
+    return render(request, 'courses/view_course.html', {'course': course})

@@ -8,9 +8,16 @@ class Term(models.Model):
     def __str__(self):
         return self.name
 
+class Department(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
 # Create your models here.
 class Course(models.Model):
     name = models.CharField(max_length=100)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     instructor = models.OneToOneField('accounts.InstructorProfile', on_delete=models.CASCADE)
     students = models.ManyToManyField('accounts.StudentProfile', through='Enrollment')
     description = models.TextField()
