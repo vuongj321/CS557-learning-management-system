@@ -1,1 +1,145 @@
 {% extends 'layout.html' %}
+
+{% block content %}
+  <!-- Page Header -->
+  <div class="mb-4">
+    <h4 class="fw-bold mb-0">Dashboard</h4>
+    <p class="text-muted small mb-0">
+      Welcome back, <strong>{{ request.user.username }}</strong>
+      {% if request.user.role %}&mdash; {{ request.user.get_role_display }}{% endif %}
+    </p>
+  </div>
+
+  {% if request.user.role == 'student' %}
+    <!-- Student stat cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body d-flex align-items-center gap-3">
+            <div class="fs-2">📚</div>
+            <div>
+              <div class="fs-4 fw-bold">{{ enrolled_count|default:"0" }}</div>
+              <div class="text-muted small">Enrolled Courses</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body d-flex align-items-center gap-3">
+            <div class="fs-2">📝</div>
+            <div>
+              <div class="fs-4 fw-bold">—</div>
+              <div class="text-muted small">Pending Assignments</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body d-flex align-items-center gap-3">
+            <div class="fs-2">🎓</div>
+            <div>
+              <div class="fs-4 fw-bold">—</div>
+              <div class="text-muted small">Average Grade</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enrolled courses list -->
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-white fw-semibold border-bottom">My Courses</div>
+      <div class="card-body p-0">
+        {% if enrolled_courses %}
+          <ul class="list-group list-group-flush">
+            {% for course in enrolled_courses %}
+              <li class="list-group-item d-flex justify-content-between align-items-center px-4 py-3">
+                <div>
+                  <div class="fw-semibold">{{ course.name }}</div>
+                  <div class="text-muted small">{{ course.department }} &bull; {{ course.credits }} credit{{ course.credits|pluralize }}</div>
+                </div>
+                <a href="{% url 'courses:home' %}" class="btn btn-sm btn-outline-primary">View</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="p-4 text-muted">
+            You are not enrolled in any courses yet.
+            <a href="{% url 'courses:home' %}">Browse courses</a>.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+  {% elif request.user.role == 'instructor' %}
+    <!-- Instructor stat cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body d-flex align-items-center gap-3">
+            <div class="fs-2">🏫</div>
+            <div>
+              <div class="fs-4 fw-bold">{{ teaching_count|default:"0" }}</div>
+              <div class="text-muted small">Courses Teaching</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body d-flex align-items-center gap-3">
+            <div class="fs-2">👥</div>
+            <div>
+              <div class="fs-4 fw-bold">—</div>
+              <div class="text-muted small">Total Students</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teaching courses list -->
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-white fw-semibold border-bottom d-flex justify-content-between align-items-center">
+        <span>My Courses</span>
+        <a href="{% url 'courses:create_course' %}" class="btn btn-sm btn-primary">+ New Course</a>
+      </div>
+      <div class="card-body p-0">
+        {% if teaching_courses %}
+          <ul class="list-group list-group-flush">
+            {% for course in teaching_courses %}
+              <li class="list-group-item d-flex justify-content-between align-items-center px-4 py-3">
+                <div>
+                  <div class="fw-semibold">{{ course.name }}</div>
+                  <div class="text-muted small">{{ course.department }} &bull; {{ course.term }} &bull; {{ course.credits }} credit{{ course.credits|pluralize }}</div>
+                </div>
+                <a href="{% url 'courses:home' %}" class="btn btn-sm btn-outline-primary">Manage</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="p-4 text-muted">
+            You haven't created any courses yet.
+            <a href="{% url 'courses:create_course' %}">Create one</a>.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+  {% endif %}
+
+  <!-- Quick Links -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-white fw-semibold border-bottom">Quick Links</div>
+    <div class="card-body">
+      <div class="d-flex flex-wrap gap-2">
+        <a href="{% url 'courses:home' %}" class="btn btn-outline-secondary btn-sm">Courses</a>
+        <a href="#" class="btn btn-outline-secondary btn-sm">Assignments</a>
+        <a href="#" class="btn btn-outline-secondary btn-sm">Grades</a>
+        <a href="#" class="btn btn-outline-secondary btn-sm">Profile</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

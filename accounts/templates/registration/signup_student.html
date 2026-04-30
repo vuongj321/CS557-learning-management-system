@@ -1,79 +1,69 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 
-{% block title %} 
-<title>Student Signup</title>
+{% block title %}
+  <title>Student Sign Up — LMS</title>
 {% endblock title %}
 
 {% block styles %}
   <style>
     body {
-      background-color: lightblue;
-    }
-    .login-card {
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
       min-height: 100vh;
-    }
-    .login-card .card {
-      width: 500px;
-    }
-    button {
-      float: right;
-    }
-    .errorlist, .error {
-      list-style: none;
-      color: red;
-    }
-    #usernameHelp, #password2Help, .password-help {
-      font-size: small;
-      color: lightgray;
-    }
-    ul {
-      list-style: none;
     }
   </style>
 {% endblock styles %}
 
 {% block app %}
-  <div class="login-card d-flex justify-content-center align-items-center flex-column">
-    <div class="card shadow">
-      <div class="card-body">
-        <h5 class="card-title mb-4">Student Signup</h5>
+  <div class="d-flex justify-content-center align-items-center flex-column" style="min-height: 100vh; padding: 2rem 0;">
+    <div class="mb-4 text-center">
+      <a href="{% url 'home' %}" class="text-decoration-none text-dark">
+        <h4 class="fw-bold">Learning Management System</h4>
+      </a>
+    </div>
+    <div class="card shadow-sm" style="width: 460px;">
+      <div class="card-body p-4">
+        <h5 class="fw-bold mb-1">Create a student account</h5>
+        <p class="text-muted small mb-4">Fill in the details below to get started.</p>
         <form method="post">
           {% csrf_token %}
-          <div class="row mb-3">
-            <label for="id_username" class="col-sm-3 col-form-label">Username</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" name="username" required="" id="id_username" />
-            </div>
-            <div id="usernameHelp" class="form-text">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
+          <div class="mb-3">
+            <label for="id_username" class="form-label fw-semibold">Username</label>
+            <input type="text" class="form-control" name="username" required id="id_username" />
+            <div class="form-text">150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
             {{ form.username.errors }}
           </div>
-          <div class="row mb-3">
-            <label for="id_email" class="col-sm-3 col-form-label">Email address</label>
-            <div class="col-sm-9">
-              <input type="email" class="form-control" name="email" required="" value="" maxlength="254" id="id_email">
-            </div>
+          <div class="mb-3">
+            <label for="id_email" class="form-label fw-semibold">Email address</label>
+            <input type="email" class="form-control" name="email" required maxlength="254" id="id_email" />
             {{ form.email.errors }}
           </div>
-          <div class="row mb-3">
-            <label for="id_password" class="col-sm-3 col-form-label">Password</label>
-            <div class="col-sm-9">
-              <input type="password" name="password1" autocomplete="current-password" required="" class="form-control" id="id_password" />
-            </div>
-            <ul class="password-help"><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul>
+          <div class="mb-3">
+            <label for="id_password" class="form-label fw-semibold">Password</label>
+            <input type="password" name="password1" autocomplete="new-password" required class="form-control" id="id_password" />
+            <ul class="form-text ps-3 mb-0">
+              <li>Can't be too similar to your personal information.</li>
+              <li>Must contain at least 8 characters.</li>
+              <li>Can't be a commonly used password.</li>
+              <li>Can't be entirely numeric.</li>
+            </ul>
             {{ form.password1.errors }}
           </div>
-          <div class="row mb-3">
-            <label for="id_password2" class="col-sm-3 col-form-label">Password confirmation</label>
-            <div class="col-sm-9">
-              <input type="password" name="password2" autocomplete="new-password" required="" class="form-control" id="id_password2" />
-            </div>
-            <div id="password2Help" class="form-text">Enter the same password as before, for verification.</div>
+          <div class="mb-3">
+            <label for="id_password2" class="form-label fw-semibold">Confirm password</label>
+            <input type="password" name="password2" autocomplete="new-password" required class="form-control" id="id_password2" />
+            <div class="form-text">Enter the same password as before, for verification.</div>
             {{ form.password2.errors }}
           </div>
           {{ form.non_field_errors }}
-          <button type="submit" class="btn btn-primary">Signup</button>
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary">Create Account</button>
+          </div>
         </form>
       </div>
     </div>
+    <p class="mt-3 text-muted small">
+      Already have an account? <a href="{% url 'accounts:login' %}">Login</a> &middot;
+      Signing up as an instructor? <a href="{% url 'accounts:signup_instructor' %}">Instructor sign up</a>.
+    </p>
   </div>
 {% endblock app %}
