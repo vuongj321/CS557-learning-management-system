@@ -8,19 +8,12 @@
   <div class="d-flex">
     <h1 class="flex-grow-1">My Courses</h1>
     <div class="dropdown">
-      <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Actions</button>
-      <ul class="dropdown-menu">
-        {% if user.is_instructor %}
-          <li>
-            <a class="dropdown-item" href="{% url 'create_course' %}">Create Course</a>
-          </li>
-        {% endif %}
-        {% if user.is_student %}
-          <li>
-            <a class="dropdown-item" href="{% url 'enroll_course' %}">Enroll in Course</a>
-          </li>
-        {% endif %}
-      </ul>
+      {% if user.is_instructor %}
+        <a class="btn btn-primary" href="{% url 'create_course' %}">Create Course</a>
+      {% endif %}
+      {% if user.is_student %}
+        <a class="btn btn-primary" href="{% url 'enroll_course' %}">Enroll in Course</a>
+      {% endif %}
     </div>
   </div>
   <table class="table table-striped mt-3">
