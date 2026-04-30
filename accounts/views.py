@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_not_required
 from django.urls import reverse_lazy
-from .forms import StudentSignupForm, TeacherSignupForm
+from .forms import StudentSignupForm, InstructorSignupForm
 
 
 @login_not_required
@@ -19,16 +19,16 @@ def signup_student(request):
     return render(request, 'registration/signup_student.html', {'form': form})
 
 @login_not_required
-def signup_teacher(request):
+def signup_instructor(request):
     if request.method == 'POST':
-        form = TeacherSignupForm(request.POST)
+        form = InstructorSignupForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('dashboard')  # change to your route
     else:
-        form = TeacherSignupForm()
-    return render(request, 'registration/signup_teacher.html', {'form': form})
+        form = InstructorSignupForm()
+    return render(request, 'registration/signup_instructor.html', {'form': form})
 
 
 class RoleLoginView(LoginView):
@@ -36,6 +36,6 @@ class RoleLoginView(LoginView):
 
     def get_success_url(self):
         user = self.request.user
-        if hasattr(user, 'role') and user.role == 'teacher':
+        if hasattr(user, 'role') and user.role == 'instructor':
             return reverse_lazy('dashboard')
         return reverse_lazy('dashboard')

@@ -1,19 +1,29 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% block title %}
-    <title>Learning Management System</title>
-    {% endblock title %}
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    {% block styles %}{% endblock styles %}
-</head>
-<body>
-    {% block app %}{% endblock app %}
+      <title>Learning Management System</title>
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+    <style>
+      .errorlist,
+      .error {
+        list-style: none;
+        color: red;
+      }
+    </style>
+    {% block styles %}
+    {% endblock %}
+  </head>
+  <body>
+    {% block app %}
+    {% endblock %}
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script defer src="{% static 'alpine.min.js' %}"></script>
-    {% block scripts %}{% endblock scripts %}
-</body>
+    {% block scripts %}
+    {% endblock %}
+  </body>
 </html>
