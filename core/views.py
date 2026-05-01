@@ -24,5 +24,6 @@ def dashboard(request):
                 teaching_courses = []
             context['teaching_courses'] = teaching_courses
             context['teaching_count'] = len(teaching_courses)
+            context['total_students'] = sum(course.students.count() for course in teaching_courses)
 
     return render(request, 'dashboard.html', context)
