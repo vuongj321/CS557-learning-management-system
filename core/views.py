@@ -27,3 +27,16 @@ def dashboard(request):
             context['total_students'] = sum(course.students.count() for course in teaching_courses)
 
     return render(request, 'dashboard.html', context)
+
+def profile(request):
+    user = request.user
+    context = {'user': user}
+    return render(request, 'profile/view.html', context)
+
+def edit_profile(request):
+    if request.method == 'POST':
+        # Handle profile update logic here (e.g., form validation, saving changes)
+        pass
+    user = request.user
+    context = {'user': user}
+    return render(request, 'profile/edit.html', context)

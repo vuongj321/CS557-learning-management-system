@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+<title>Edit Profile - Learning Management System</title>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="mb-4">
+    <h4 class="fw-bold mb-0">Edit Profile</h4>
+    <p class="text-muted small">Update your personal information below.</p>
+  </div>
+
+  <div class="card border-0 shadow-sm" style="max-width: 700px;">
+    <div class="card-body p-4">
+      <form method="post">
+        {% csrf_token %}
+        <h5 class="card-title">User: {{ user.username }}</h5>
+        <h6 class="card-subtitle mb-3 text-muted">Role: {{ user.get_role_display }}</h6>
+        <div class="mb-3">
+          <label for="first_name" class="form-label fw-semibold">First Name</label>
+          <input type="text" class="form-control" id="first_name" name="first_name"
+            value="{{ form.first_name.value|default:'' }}" placeholder="e.g. John" />
+          {{ form.first_name.errors }}
+        </div>
+
+        <div class="mb-3">
+          <label for="last_name" class="form-label fw-semibold">Last Name</label>
+          <input type="text" class="form-control" id="last_name" name="last_name"
+            value="{{ form.last_name.value|default:'' }}" placeholder="e.g. Doe" />
+          {{ form.last_name.errors }}
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label fw-semibold">Email</label>
+          <input type="email" class="form-control" id="email" name="email"
+            value="{{ form.email.value|default:'' }}" placeholder="e.g. john.doe@example.com" />
+          {{ form.email.errors }}
+        </div>
+
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger py-2 small mb-3">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <a href="{% url 'profile' %}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
