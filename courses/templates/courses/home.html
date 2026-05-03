@@ -9,7 +9,7 @@
     <div class="flex-grow-1">
       <h2 class="fw-bold mb-0" style="color: #1e2a3a;">My Courses</h2>
       <p class="text-muted mb-0 mt-1">
-        {% if courses %}{{ courses|length }} course{{ courses|length|pluralize }} enrolled{% else %}No courses yet{% endif %}
+        {% if courses %}{{ courses|length }} course{{ courses|length|pluralize }} {% if user.is_student %}enrolled{% else %}created{% endif %}{% else %}No courses yet{% endif %}
       </p>
     </div>
     {% if user.is_instructor %}
