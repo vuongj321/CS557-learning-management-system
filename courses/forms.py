@@ -8,4 +8,3 @@ class CreateCourseForm(forms.Form):
     number_of_seats = forms.IntegerField(min_value=1, max_value=100)
     term = forms.ModelChoiceField(queryset=Term.objects.all())
     department = forms.ModelChoiceField(queryset=Department.objects.all())
-    students = forms.ModelMultipleChoiceField(queryset=None, required=False)
