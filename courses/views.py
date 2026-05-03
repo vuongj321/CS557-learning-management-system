@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 
 from accounts.models import InstructorProfile, StudentProfile
 from courses.forms import CreateCourseForm
-from courses.models import Course
+from courses.models import Course, Enrollment
 
 # Create your views here.
 def courses(request):
@@ -113,3 +113,27 @@ def edit_course(request, course_id):
         }
         form = CreateCourseForm(initial=initial_data)
     return render(request, 'courses/edit_course.html', {'form': form, 'course': course})
+
+def manage_enrollments(request, course_id):
+    course = Course.objects.get(id=course_id)
+    enrollments = course.enrollment_set.select_related('student', 'student__user')
+    available_students = StudentProfile.objects.exclude(enrollment__course=course)
+
+    if request.method == 'POST':
+        # Handle enrollment management logic here (e.g., adding/removing students)
+        action = request.POST.get('action')
+        student_id = request.POST.get('student_id')
+        if action and student_id:
+            student = StudentProfile.objects.get(id=student_id)
+            if action == 'enroll':
+                Enrollment.objects.create(course=course, student=student)
+            elif action == 'unenroll':
+                Enrollment.objects.filter(course=course, student=student).delete()
+            return redirect('courses:enrollments', course_id=course.id)
+
+    context = {
+        'course': course,
+        'enrollments': enrollments,
+        'available_students': available_students,
+    }
+    return render(request, 'courses/manage_enrollments.html', context)

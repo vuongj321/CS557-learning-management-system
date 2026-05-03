@@ -1,0 +1,108 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  <title>Manage Enrollments - {{ course.name }} - Learning Management System</title>
+{% endblock %}
+
+{% block content %}
+  <form id="enrollment-form" method="post" action="{% url 'courses:enrollments' course.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="" />
+    <input type="hidden" name="student_id" value="" />
+  </form>
+
+  <div class="mb-4 d-flex justify-content-between align-items-start">
+    <div>
+      <h2 class="mb-1">Manage Enrollments - {{ course.name }}</h2>
+      <div class="small text-muted">
+        <span class="me-3"><strong>Instructor:</strong> {{ course.instructor.user.get_full_name }}</span>
+        <span class="me-2"><span class="badge bg-secondary">{{ course.term.name }}</span></span>
+        {% if course.department %}
+          <span class="me-2"><span class="badge bg-info text-dark">{{ course.department.name }}</span></span>
+        {% endif %}
+      </div>
+    </div>
+    <div class="btn-group">
+      <a href="{% url 'courses:view_course' course.id %}" class="btn btn-outline-secondary">Back to Course</a>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4" style="max-width: 900px;">
+    <div class="card-body">
+      <h5 class="card-title">Enrolled Students</h5>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Student</th>
+              <th>Email</th>
+              <th>Enrolled</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for enrollment in enrollments %}
+              <tr>
+                <td>{{ enrollment.student.user.get_full_name }}</td>
+                <td>{{ enrollment.student.user.email }}</td>
+                <td>{{ enrollment.enrollment_date|date:"M j, Y" }}</td>
+                <td class="text-end">
+                  <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="handleEnrollmentAction({{ enrollment.student.id }}, 'unenroll')">Unenroll</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4" class="text-center text-muted py-4">No students enrolled yet.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm" style="max-width: 900px;">
+    <div class="card-body">
+      <h5 class="card-title">Available Students</h5>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Student</th>
+              <th>Email</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for student in available_students %}
+              <tr>
+                <td>{{ student.user.get_full_name }}</td>
+                <td>{{ student.user.email }}</td>
+                <td class="text-end">
+                  <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="handleEnrollmentAction({{ student.id }}, 'enroll')">Enroll</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="3" class="text-center text-muted py-4">No students available for enrollment.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    // Add your JavaScript code here if needed
+    function handleEnrollmentAction(studentId, action) {
+      const form = document.getElementById('enrollment-form')
+      form.querySelector('input[name="action"]').value = action
+      form.querySelector('input[name="student_id"]').value = studentId
+      form.submit()
+    }
+  </script>
+{% endblock %}

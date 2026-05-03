@@ -31,7 +31,10 @@
                 <p class="card-text">{{ course.description|linebreaksbr }}</p>
 
                 <div class="mt-4">
-                    <h6 class="mb-3">Enrolled Students <span class="badge bg-light text-muted">{{ enrolled_count }}</span></h6>
+                    <div class="d-flex mb-3">
+                        <h6 class="mb-3">Enrolled Students <span class="badge bg-light text-muted">{{ enrolled_count }}</span></h6>
+                        <a href="{% url 'courses:enrollments' course.id %}" class="btn btn-outline-secondary ms-auto">Enroll Students</a>
+                    </div>
 
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
@@ -45,8 +48,8 @@
                             <tbody>
                                 {% for enrollment in enrollments %}
                                     <tr>
-                                        <td>{{ enrollment.student.get_full_name }}</td>
-                                        <td><a href="mailto:{{ enrollment.student.email }}">{{ enrollment.student.email }}</a></td>
+                                        <td>{{ enrollment.student.user.get_full_name }}</td>
+                                        <td><a href="mailto:{{ enrollment.student.user.email }}">{{ enrollment.student.user.email }}</a></td>
                                         <td class="text-end small text-muted">{% if enrollment.enrollment_date %}{{ enrollment.enrollment_date|date:"M j, Y" }}{% endif %}</td>
                                     </tr>
                                 {% empty %}
