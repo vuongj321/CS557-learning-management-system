@@ -103,7 +103,8 @@
     <!-- Teaching courses list -->
     <div class="card border-0 shadow-sm mb-4">
       <div class="card-header bg-white fw-semibold border-bottom d-flex justify-content-between align-items-center">
-        <span>My Courses</span>
+        <span class="flex-grow-1">My Courses</span>
+        <a href="{% url 'courses:home' %}" class="btn btn-sm btn-outline-primary me-2">Manage</a>
         <a href="{% url 'courses:create_course' %}" class="btn btn-sm btn-primary">+ New Course</a>
       </div>
       <div class="card-body p-0">
@@ -115,7 +116,7 @@
                   <div class="fw-semibold">{{ course.name }}</div>
                   <div class="text-muted small">{{ course.department }} &bull; {{ course.term }} &bull; {{ course.credits }} credit{{ course.credits|pluralize }}</div>
                 </div>
-                <a href="{% url 'courses:home' %}" class="btn btn-sm btn-outline-primary">Manage</a>
+                
               </li>
             {% endfor %}
           </ul>
