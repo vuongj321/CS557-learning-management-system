@@ -47,7 +47,42 @@ def enroll_course(request):
 
 def view_course(request, course_id):
     course = Course.objects.get(id=course_id)
-    return render(request, 'courses/view_course.html', {'course': course})
+    user = request.user
+
+    is_instructor = False
+    is_owner = False
+    is_enrolled = False
+    enrolled_count = course.enrollment_set.count()
+    enrollments = course.enrollment_set.select_related('student', 'student__user')
+
+    if user.is_authenticated:
+        # determine instructor ownership
+        try:
+            if hasattr(user, 'instructor_profile') and user.is_instructor():
+                is_instructor = True
+                instructor_profile = user.instructor_profile
+                is_owner = (course.instructor == instructor_profile)
+        except InstructorProfile.DoesNotExist:
+            is_instructor = False
+
+        # determine student enrollment
+        try:
+            if hasattr(user, 'student_profile') and user.is_student():
+                student_profile = user.student_profile
+                is_enrolled = course.enrollment_set.filter(student=student_profile).exists()
+        except StudentProfile.DoesNotExist:
+            is_enrolled = False
+
+    context = {
+        'course': course,
+        'is_instructor': is_instructor,
+        'is_owner': is_owner,
+        'is_enrolled': is_enrolled,
+        'enrolled_count': enrolled_count,
+        'enrollments': enrollments,
+    }
+
+    return render(request, 'courses/view_course.html', context)
 
 def delete_course(request, course_id):
     course = Course.objects.get(id=course_id)
