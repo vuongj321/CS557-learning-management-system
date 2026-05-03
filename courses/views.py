@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 
 from accounts.models import InstructorProfile, StudentProfile
+from announcements.forms import AnnouncementForm
 from courses.forms import CreateCourseForm
 from courses.models import Course, Enrollment
 
@@ -73,6 +74,20 @@ def view_course(request, course_id):
         except StudentProfile.DoesNotExist:
             is_enrolled = False
 
+    announcement_form = None
+    if is_owner:
+        if request.method == 'POST':
+            announcement_form = AnnouncementForm(request.POST)
+            if announcement_form.is_valid():
+                announcement = announcement_form.save(commit=False)
+                announcement.course = course
+                announcement.save()
+                return redirect('courses:view_course', course_id=course_id)
+        else:
+            announcement_form = AnnouncementForm()
+
+    announcements = course.announcements.order_by('-created_at')
+
     context = {
         'course': course,
         'is_instructor': is_instructor,
@@ -80,6 +95,8 @@ def view_course(request, course_id):
         'is_enrolled': is_enrolled,
         'enrolled_count': enrolled_count,
         'enrollments': enrollments,
+        'announcements': announcements,
+        'announcement_form': announcement_form,
     }
 
     return render(request, 'courses/view_course.html', context)

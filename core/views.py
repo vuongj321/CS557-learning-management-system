@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_not_required
 from accounts.forms import EditProfileForm
+from announcements.models import Announcement
 
 # Create your views here.
 @login_not_required
@@ -16,7 +17,7 @@ def dashboard(request):
             enrolled_courses = user.student_profile.course_set.all()
             context['enrolled_courses'] = enrolled_courses
             context['enrolled_count'] = enrolled_courses.count()
-            context['announcements'] = enrolled_courses.filter(announcements__isnull=False).distinct().order_by('-announcements__created_at')[:5]
+            context['announcements'] = Announcement.objects.filter(course__in=enrolled_courses).distinct().order_by('-created_at')[:5]
         elif user.role == 'instructor' and hasattr(user, 'instructor_profile'):
             teaching_courses = user.instructor_profile.course_set.all() if hasattr(user.instructor_profile, 'course_set') else []
             try:
@@ -27,7 +28,7 @@ def dashboard(request):
             context['teaching_courses'] = teaching_courses
             context['teaching_count'] = len(teaching_courses)
             context['total_students'] = sum(course.students.count() for course in teaching_courses)
-            context['announcements'] = teaching_courses.filter(announcements__isnull=False).distinct().order_by('-announcements__created_at')[:5]
+            context['announcements'] = Announcement.objects.filter(course__in=teaching_courses).distinct().order_by('-created_at')[:5]
 
     return render(request, 'dashboard.html', context)
 

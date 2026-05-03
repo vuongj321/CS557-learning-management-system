@@ -34,9 +34,7 @@
                     <div class="d-flex mb-3">
                         <h6 class="mb-3">Enrolled Students <span class="badge bg-light text-muted">{{ enrolled_count }}</span></h6>
                         <a href="{% url 'courses:enrollments' course.id %}" class="btn btn-outline-secondary ms-auto">Manage Students</a>
-                    </div>
-
-                    <div class="table-responsive">
+                    </div>                    <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
@@ -64,8 +62,7 @@
             </div>
 
             <div class="col-lg-4">
-                <h6 class="mb-3">Course Details</h6>
-                <ul class="list-group">
+                <h6 class="mb-3">Course Details</h6>                <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Credits
                         <span class="badge bg-primary rounded-pill">{{ course.credits }}</span>
@@ -98,5 +95,48 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="card shadow-sm mt-4">
+    <div class="card-header bg-white fw-semibold border-bottom d-flex justify-content-between align-items-center">
+        <span>Announcements <span class="badge bg-light text-muted fw-normal">{{ announcements|length }}</span></span>
+    </div>
+    <div class="card-body p-0">
+        {% if announcements %}
+            <ul class="list-group list-group-flush">
+                {% for announcement in announcements %}
+                    <li class="list-group-item px-4 py-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h6 class="mb-1 fw-semibold">{{ announcement.title }}</h6>
+                            <span class="text-muted small ms-3 text-nowrap">{{ announcement.created_at|date:"M j, Y" }}</span>
+                        </div>
+                        <p class="mb-0 text-muted small">{{ announcement.content|linebreaksbr }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted p-4 mb-0">No announcements yet.</p>
+        {% endif %}
+    </div>
+
+    {% if is_owner %}
+        <div class="card-footer bg-white border-top pt-3 pb-4 px-4">
+            <h6 class="fw-semibold mb-3">Post an Announcement</h6>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ announcement_form.title.id_for_label }}" class="form-label fw-semibold">Title</label>
+                    {{ announcement_form.title }}
+                    {{ announcement_form.title.errors }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ announcement_form.content.id_for_label }}" class="form-label fw-semibold">Content</label>
+                    {{ announcement_form.content }}
+                    {{ announcement_form.content.errors }}
+                </div>
+                <button type="submit" class="btn btn-primary">Post Announcement</button>
+            </form>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

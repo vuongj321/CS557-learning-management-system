@@ -137,10 +137,13 @@
       {% if announcements %}
         <ul class="list-group list-group-flush">
           {% for announcement in announcements %}
-            <li class="list-group-item px-4 py-3">
-              <div class="fw-semibold">{{ announcement.title }}</div>
+            <li class="list-group-item px-4 py-3 d-flex">
+              <div class="flex-grow-1 me-3">
+                <div class="fw-semibold">{{ announcement.title }}</div>
+                <div class="text-muted small mb-2">{{ announcement.course.name }}</div>
+                <p class="mb-0">{{ announcement.content }}</p>
+              </div>            
               <div class="text-muted small">{{ announcement.created_at|date:"M d, Y" }}</div>
-              <p class="mb-0">{{ announcement.content }}</p>
             </li>
           {% endfor %}
         </ul>
