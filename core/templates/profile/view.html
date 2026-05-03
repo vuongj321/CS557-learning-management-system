@@ -1,16 +1,36 @@
 {% extends 'layout.html' %}
 
+{% block title %}
+<title>Profile - Learning Management System</title>
+{% endblock %}
+
 {% block content %}
-<div class="container mt-4">
-    <h2>Profile</h2>
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title">{{ user.username }}</h5>
-            <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
-            <p class="card-text"><strong>First Name:</strong> {{ user.first_name }}</p>
-            <p class="card-text"><strong>Last Name:</strong> {{ user.last_name }}</p>
+  <div class="mb-4">
+    <h4 class="fw-bold mb-0">Profile</h4>
+    <p class="text-muted small">View your account information.</p>
+  </div>
+
+  <div class="card border-0 shadow-sm" style="max-width: 700px;">
+    <div class="card-body p-4">
+      <h5 class="card-title mb-0">{{ user.username }}</h5>
+      <h6 class="card-subtitle mb-4 text-muted">{{ user.get_role_display }}</h6>
+
+      <div class="row g-3 mb-4">
+        <div class="col-sm-6">
+          <div class="text-muted small fw-semibold text-uppercase mb-1" style="letter-spacing: 0.05em;">First Name</div>
+          <div class="fw-semibold">{{ user.first_name|default:"-" }}</div>
         </div>
+        <div class="col-sm-6">
+          <div class="text-muted small fw-semibold text-uppercase mb-1" style="letter-spacing: 0.05em;">Last Name</div>
+          <div class="fw-semibold">{{ user.last_name|default:"-" }}</div>
+        </div>
+        <div class="col-12">
+          <div class="text-muted small fw-semibold text-uppercase mb-1" style="letter-spacing: 0.05em;">Email</div>
+          <div class="fw-semibold">{{ user.email|default:"-" }}</div>
+        </div>
+      </div>
+
+      <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
     </div>
-    <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
-</div>
+  </div>
 {% endblock %}

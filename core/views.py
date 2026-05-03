@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_not_required
+from accounts.forms import EditProfileForm
 
 # Create your views here.
 @login_not_required
@@ -35,8 +36,10 @@ def profile(request):
 
 def edit_profile(request):
     if request.method == 'POST':
-        # Handle profile update logic here (e.g., form validation, saving changes)
-        pass
-    user = request.user
-    context = {'user': user}
-    return render(request, 'profile/edit.html', context)
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = EditProfileForm(instance=request.user)
+    return render(request, 'profile/edit.html', {'form': form, 'user': request.user})

@@ -19,23 +19,20 @@
         <h5 class="card-title">User: {{ user.username }}</h5>
         <h6 class="card-subtitle mb-3 text-muted">Role: {{ user.get_role_display }}</h6>
         <div class="mb-3">
-          <label for="first_name" class="form-label fw-semibold">First Name</label>
-          <input type="text" class="form-control" id="first_name" name="first_name"
-            value="{{ form.first_name.value|default:'' }}" placeholder="e.g. John" />
+          <label for="{{ form.first_name.id_for_label }}" class="form-label fw-semibold">First Name</label>
+          {{ form.first_name }}
           {{ form.first_name.errors }}
         </div>
 
         <div class="mb-3">
-          <label for="last_name" class="form-label fw-semibold">Last Name</label>
-          <input type="text" class="form-control" id="last_name" name="last_name"
-            value="{{ form.last_name.value|default:'' }}" placeholder="e.g. Doe" />
+          <label for="{{ form.last_name.id_for_label }}" class="form-label fw-semibold">Last Name</label>
+          {{ form.last_name }}
           {{ form.last_name.errors }}
         </div>
 
         <div class="mb-3">
-          <label for="email" class="form-label fw-semibold">Email</label>
-          <input type="email" class="form-control" id="email" name="email"
-            value="{{ form.email.value|default:'' }}" placeholder="e.g. john.doe@example.com" />
+          <label for="{{ form.email.id_for_label }}" class="form-label fw-semibold">Email</label>
+          {{ form.email }}
           {{ form.email.errors }}
         </div>
 

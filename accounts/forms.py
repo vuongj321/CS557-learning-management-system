@@ -42,3 +42,14 @@ class InstructorSignupForm(UserCreationForm):
             user.save()
             InstructorProfile.objects.create(user=user)
         return user
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g. John'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g. Doe'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'e.g. john.doe@example.com'}),
+        }
