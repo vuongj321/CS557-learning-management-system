@@ -21,24 +21,57 @@
     </nav>
   </div>
   <div class="container-fluid d-flex flex-row p-3">
-    <div id="sidebar">
+    <div id="sidebar" style="min-width: 220px; max-width: 220px;">
       {% block sidebar %}
-      <div class="p-3" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
-        <ul class="nav flex-column mb-3">
+      <div class="d-flex flex-column" style="background-color: #1e2a3a; border-radius: 10px; min-height: 80vh; padding: 1rem 0;">
+        <div class="px-3 pb-3 mb-2" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <span class="text-uppercase fw-bold" style="color: rgba(255,255,255,0.45); font-size: 0.7rem; letter-spacing: 0.1em;">Navigation</span>
+        </div>
+        <ul class="nav flex-column gap-1 px-2">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+            <a class="nav-link d-flex align-items-center gap-2 rounded px-3 py-2" href="{% url 'dashboard' %}"
+               style="color: rgba(255,255,255,0.8); transition: background 0.15s;"
+               onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.color='#fff';"
+               onmouseout="this.style.background=''; this.style.color='rgba(255,255,255,0.8)';">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-speedometer2" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.517z"/><path d="M0 10a8 8 0 1 1 15.547 2.661c-.399 1.13-1.33 2.148-2.547 2.148h-8c-1.217 0-2.148-1.017-2.547-2.148A8 8 0 0 1 0 10m8-7a7 7 0 0 0-5.468 11.37C2.722 15.045 3.636 16 5 16h6c1.364 0 2.278-.955 2.468-1.63A7 7 0 0 0 8 3"/></svg>
+              Dashboard
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'courses:home' %}">Courses</a>
+            <a class="nav-link d-flex align-items-center gap-2 rounded px-3 py-2" href="{% url 'courses:home' %}"
+               style="color: rgba(255,255,255,0.8); transition: background 0.15s;"
+               onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.color='#fff';"
+               onmouseout="this.style.background=''; this.style.color='rgba(255,255,255,0.8)';">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16"><path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/></svg>
+              Courses
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Assignments</a>
+            <a class="nav-link d-flex align-items-center gap-2 rounded px-3 py-2" href="#"
+               style="color: rgba(255,255,255,0.8); transition: background 0.15s;"
+               onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.color='#fff';"
+               onmouseout="this.style.background=''; this.style.color='rgba(255,255,255,0.8)';">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/></svg>
+              Assignments
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Grades</a>
+            <a class="nav-link d-flex align-items-center gap-2 rounded px-3 py-2" href="#"
+               style="color: rgba(255,255,255,0.8); transition: background 0.15s;"
+               onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.color='#fff';"
+               onmouseout="this.style.background=''; this.style.color='rgba(255,255,255,0.8)';">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line" viewBox="0 0 16 16"><path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1zm1 12V2h-2v12zm-3 0V7H7v7zm-5 0v-3H2v3z"/></svg>
+              Grades
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
+            <a class="nav-link d-flex align-items-center gap-2 rounded px-3 py-2" href="#"
+               style="color: rgba(255,255,255,0.8); transition: background 0.15s;"
+               onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.color='#fff';"
+               onmouseout="this.style.background=''; this.style.color='rgba(255,255,255,0.8)';">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C2.722 15.045 3.636 16 5 16h6c1.364 0 2.278-.955 2.468-1.63A7 7 0 0 0 8 1"/></svg>
+              Profile
+            </a>
           </li>
         </ul>
       </div>

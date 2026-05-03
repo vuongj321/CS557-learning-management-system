@@ -26,6 +26,7 @@ def create_course(request):
             credits = form.cleaned_data['credits']
             number_of_seats = form.cleaned_data['number_of_seats']
             term = form.cleaned_data['term']
+            department = form.cleaned_data['department']
             instructor_profile = InstructorProfile.objects.get(user=request.user)
             Course.objects.create(
                 name=course_name,
@@ -33,6 +34,7 @@ def create_course(request):
                 credits=credits,
                 number_of_seats=number_of_seats,
                 term=term,
+                department=department,
                 instructor=instructor_profile
             )
             return redirect('courses:home')
@@ -46,3 +48,33 @@ def enroll_course(request):
 def view_course(request, course_id):
     course = Course.objects.get(id=course_id)
     return render(request, 'courses/view_course.html', {'course': course})
+
+def delete_course(request, course_id):
+    course = Course.objects.get(id=course_id)
+    course.delete()
+    return redirect('courses:home')
+
+def edit_course(request, course_id):
+    course = Course.objects.get(id=course_id)
+    if request.method == 'POST':
+        form = CreateCourseForm(request.POST)
+        if form.is_valid():
+            course.name = form.cleaned_data['course_name']
+            course.description = form.cleaned_data['course_description']
+            course.credits = form.cleaned_data['credits']
+            course.number_of_seats = form.cleaned_data['number_of_seats']
+            course.term = form.cleaned_data['term']
+            course.department = form.cleaned_data['department']
+            course.save()
+            return redirect('courses:view_course', course_id=course.id)
+    else:
+        initial_data = {
+            'course_name': course.name,
+            'course_description': course.description,
+            'credits': course.credits,
+            'number_of_seats': course.number_of_seats,
+            'term': course.term,
+            'department': course.department
+        }
+        form = CreateCourseForm(initial=initial_data)
+    return render(request, 'courses/edit_course.html', {'form': form, 'course': course})

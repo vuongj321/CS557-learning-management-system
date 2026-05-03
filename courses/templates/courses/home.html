@@ -5,49 +5,84 @@
 {% endblock %}
 
 {% block content %}
-  <div class="d-flex">
-    <h1 class="flex-grow-1">My Courses</h1>
-    <div class="dropdown">
+  <div class="d-flex align-items-center mb-4">
+    <div class="flex-grow-1">
+      <h2 class="fw-bold mb-0" style="color: #1e2a3a;">My Courses</h2>
+      <p class="text-muted mb-0 mt-1">
+        {% if courses %}{{ courses|length }} course{{ courses|length|pluralize }} enrolled{% else %}No courses yet{% endif %}
+      </p>
+    </div>
+    {% if user.is_instructor %}
+      <a class="btn btn-primary px-4" href="{% url 'courses:create_course' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/></svg>
+        Create Course
+      </a>
+    {% endif %}
+    {% if user.is_student %}
+      <a class="btn btn-primary px-4" href="{% url 'courses:enroll_course' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/></svg>
+        Enroll in Course
+      </a>
+    {% endif %}
+  </div>
+
+  {% if courses %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+      {% for course in courses %}
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0" style="border-radius: 12px; overflow: hidden;">
+            <div style="height: 6px; background: linear-gradient(90deg, #1e2a3a, #4a90d9);"></div>
+            <div class="card-body d-flex flex-column p-4">
+              <div class="d-flex align-items-start justify-content-between mb-2">
+                <h5 class="card-title fw-bold mb-0" style="color: #1e2a3a;">{{ course.name }}</h5>
+                <span class="badge rounded-pill ms-2 flex-shrink-0" style="background-color: #e8f0fe; color: #1e2a3a; font-size: 0.75rem;">
+                  {{ course.credits }} cr.
+                </span>
+              </div>
+
+              <p class="text-muted small mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-person-fill me-1" viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/></svg>
+                {{ course.instructor.user.get_full_name }}
+              </p>
+
+              {% if course.description %}
+                <p class="card-text text-muted small flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                  {{ course.description }}
+                </p>
+              {% else %}
+                <p class="card-text text-muted small fst-italic flex-grow-1">No description provided.</p>
+              {% endif %}
+
+              <div class="d-flex align-items-center mt-3 pt-3" style="border-top: 1px solid #f0f0f0;">
+                <span class="text-muted small me-auto">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-calendar3 me-1" viewBox="0 0 16 16"><path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/><path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg>
+                  {{ course.term }}
+                </span>
+                <a href="{% url 'courses:view_course' course.id %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">View</a>
+                {% if user.is_instructor and course.instructor.user == user %}
+                  <a href="{% url 'courses:edit_course' course.id %}" class="btn btn-sm btn-outline-secondary rounded-pill px-3 ms-2">Edit</a>
+                  <a href="{% url 'courses:delete_course' course.id %}" class="btn btn-sm btn-outline-danger rounded-pill px-3 ms-2">Delete</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="text-center py-5 mt-3" style="background-color: #f8f9fa; border-radius: 12px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#adb5bd" class="bi bi-journal-bookmark mb-3" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8"/><path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/><path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/></svg>
+      <h5 class="text-muted fw-normal">
+        {% if user.is_instructor %}You haven't created any courses yet.{% else %}You're not enrolled in any courses yet.{% endif %}
+      </h5>
+      <p class="text-muted small mb-4">
+        {% if user.is_instructor %}Create your first course to get started.{% else %}Browse available courses and enroll to get started.{% endif %}
+      </p>
       {% if user.is_instructor %}
-        <a class="btn btn-primary" href="{% url 'courses:create_course' %}">Create Course</a>
-      {% endif %}
-      {% if user.is_student %}
-        <a class="btn btn-primary" href="{% url 'courses:enroll_course' %}">Enroll in Course</a>
+        <a class="btn btn-primary px-4" href="{% url 'courses:create_course' %}">Create a Course</a>
+      {% else %}
+        <a class="btn btn-primary px-4" href="{% url 'courses:enroll_course' %}">Enroll in a Course</a>
       {% endif %}
     </div>
-  </div>
-  <hr>
-  <table class="table table-striped mt-3">
-    <thead>
-      <tr>
-        <th scope="col">Course Name</th>
-        <th scope="col">Instructor</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for course in courses %}
-        <tr>
-          <td>{{ course.name }}</td>
-          <td>{{ course.instructor.get_full_name }}</td>
-          <td>
-            <a href="{% url 'courses:view_course' course.id %}" class="">View</a>
-            {% if user.is_instructor and course.instructor == user %}
-              <a href="{% url 'courses:edit_course' course.id %}" class="">Edit</a>
-              <a href="{% url 'courses:delete_course' course.id %}" class="">Delete</a>
-            {% endif %}
-          </td>
-        </tr>
-      {% empty %}
-        <tr>
-          {% if user.is_instructor %}
-            <td colspan="3" class="text-center">You have not created any courses yet.</td>
-          {% else %}
-            <td colspan="3" class="text-center">You are not enrolled in any courses yet.</td>
-          {% endif %}
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  
+  {% endif %}
 {% endblock %}
