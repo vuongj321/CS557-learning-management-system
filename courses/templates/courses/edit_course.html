@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-  <title>Create Course - Learning Management System</title>
+  <title>Edit Course - Learning Management System</title>
 {% endblock %}
 
 {% block content %}
   <div class="mb-4">
-    <h4 class="fw-bold mb-0">Create New Course</h4>
+    <h4 class="fw-bold mb-0">Edit Course</h4>
     <p class="text-muted small">Fill in the details below to set up a new course.</p>
   </div>
 
@@ -33,9 +33,9 @@
           <div class="col-sm-6">
             <label for="term" class="form-label fw-semibold">Term</label>
             <select class="form-select" id="term" name="term">
-              <option value="">Select a term…</option>
+              <option value="">Select a term...</option>
               {% for term in form.term.field.queryset %}
-                <option value="{{ term.id }}" {% if form.term.value == term.id|stringformat:"s" %}selected{% endif %}>
+                <option value="{{ term.id }}" {% if form.term.value == term.id %}selected{% endif %}>
                   {{ term.name }}
                 </option>
               {% endfor %}
@@ -45,9 +45,9 @@
           <div class="col-sm-6">
             <label for="department" class="form-label fw-semibold">Department</label>
             <select class="form-select" id="department" name="department">
-              <option value="">Select a department…</option>
+              <option value="">Select a department...</option>
               {% for dept in form.department.field.queryset %}
-                <option value="{{ dept.id }}" {% if form.department.value == dept.id|stringformat:"s" %}selected{% endif %}>
+                <option value="{{ dept.id }}" {% if form.department.value == dept.id %}selected{% endif %}>
                   {{ dept.name }}
                 </option>
               {% endfor %}
