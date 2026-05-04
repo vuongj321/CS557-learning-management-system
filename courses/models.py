@@ -18,7 +18,7 @@ class Department(models.Model):
 class Course(models.Model):
     name = models.CharField(max_length=100)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    instructor = models.OneToOneField('accounts.InstructorProfile', on_delete=models.CASCADE)
+    instructor = models.ForeignKey('accounts.InstructorProfile', on_delete=models.CASCADE)
     students = models.ManyToManyField('accounts.StudentProfile', through='Enrollment')
     description = models.TextField()
     credits = models.PositiveIntegerField()

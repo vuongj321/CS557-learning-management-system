@@ -1,2 +1,90 @@
 {% extends 'base.html' %}
 
+{% block title %}
+  <title>Learning Management System</title>
+{% endblock %}
+
+{% block app %}
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-gradient" style="background-color: lightblue;">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'home' %}">Learning Management System</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-primary ms-2" href="{% url 'accounts:signup_student' %}">Sign Up</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="py-5 text-center" style="background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);">
+    <div class="container py-4">
+      <h1 class="display-4 fw-bold mb-3">Welcome to the Learning Management System</h1>
+      <p class="lead text-muted mb-4">
+        A platform for instructors to create courses and for students to learn, track assignments, and manage their education.
+      </p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="{% url 'accounts:signup_student' %}" class="btn btn-primary btn-lg">Get Started as Student</a>
+        <a href="{% url 'accounts:signup_instructor' %}" class="btn btn-outline-secondary btn-lg">Join as Instructor</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-5 bg-white">
+    <div class="container">
+      <h2 class="text-center fw-semibold mb-5">Everything you need in one place</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm text-center p-4">
+            <div class="mb-3 fs-1">📚</div>
+            <h5 class="card-title fw-bold">Courses</h5>
+            <p class="card-text text-muted">Browse and enroll in courses taught by qualified instructors. Track your progress from start to finish.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm text-center p-4">
+            <div class="mb-3 fs-1">📝</div>
+            <h5 class="card-title fw-bold">Assignments</h5>
+            <p class="card-text text-muted">Submit assignments on time and receive feedback directly from your instructors.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm text-center p-4">
+            <div class="mb-3 fs-1">🎓</div>
+            <h5 class="card-title fw-bold">Grades</h5>
+            <p class="card-text text-muted">View your grades and academic progress in a clear and organized gradebook.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-5 text-center" style="background-color: lightblue;">
+    <div class="container">
+      <h3 class="fw-bold mb-3">Ready to start learning?</h3>
+      <p class="text-muted mb-4">Create a free account and join today.</p>
+      <a href="{% url 'accounts:signup_student' %}" class="btn btn-primary btn-lg">Create an Account</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-3 text-center text-muted bg-light border-top">
+    <div class="container">
+      <small>&copy; 2026 Learning Management System. All rights reserved.</small>
+    </div>
+  </footer>
+{% endblock %}
+
+
