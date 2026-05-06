@@ -43,8 +43,26 @@ def create_course(request):
         form = CreateCourseForm()
     return render(request, 'courses/create_course.html', {'form': form})
 
-def enroll_course(request):
-    return render(request, 'courses/enroll_course.html')
+def enroll_course_list(request):
+    courses = Course.objects.exclude(students__user=request.user)
+
+    return render(request, 'courses/enroll_course_list.html', {'courses': courses})
+
+def enroll_course(request, course_id):
+    course = Course.objects.get(id=course_id)
+    user = request.user
+    if user.is_authenticated and hasattr(user, 'student_profile'):
+        student_profile = user.student_profile
+        Enrollment.objects.get_or_create(course=course, student=student_profile)
+    return redirect('courses:view_course', course_id=course_id)
+
+def unenroll_course(request, course_id):
+    course = Course.objects.get(id=course_id)
+    user = request.user
+    if user.is_authenticated and hasattr(user, 'student_profile'):
+        student_profile = user.student_profile
+        Enrollment.objects.filter(course=course, student=student_profile).delete()
+    return redirect('courses:view_course', course_id=course_id)
 
 def view_course(request, course_id):
     course = Course.objects.get(id=course_id)
