@@ -54,6 +54,7 @@ A Django-based learning management system.
    ```
 
 2. **Update `settings.py`**
+
    ```python
    DATABASES = {
        'default': {
@@ -79,3 +80,10 @@ A Django-based learning management system.
    pip install -r requirements.txt
    ```
 
+## Seeding the database
+
+1. **Run the python script**
+
+```bash
+   python users-seed.py
+```
