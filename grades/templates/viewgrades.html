@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Grades - Learning Management System</title>
+{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center mb-4">
+    <div class="flex-grow-1">
+      <h2 class="fw-bold mb-0" style="color: #1e2a3a;">Grades for {{ student }}</h2>
+    </div>
+  </div>
+    {% if courses %}
+<div class="container mt-4">
+  <div class="row g-3">
+    {% for course in courses %}
+    <div class="col-12">
+      <a href="{% url 'courses:view_course' course.id %}"
+         class="text-decoration-none">
+        <div class="card shadow-sm border-0"
+             style="border-radius: 14px; overflow: hidden;">
+          <!-- top accent bar -->
+          <div style="
+              height: 5px;
+              background: linear-gradient(90deg, #1e2a3a, #4a90d9);
+          "></div>
+          <div class="card-body d-flex justify-content-between align-items-center px-4 py-3">
+            <!-- left side -->
+            <div>
+              <h4 class="fw-bold mb-1"
+                  style="color: #1e2a3a;">
+                {{ course.name }}
+              </h4>
+              <p class="text-muted mb-0">
+                {{ course.term }}
+              </p>
+            </div>
+            <!-- right side -->
+            <div class="text-end">
+              <p class="text-muted small mb-1">
+                Grade
+              </p>
+              <span class="badge rounded-pill px-3 py-2"
+                    style="
+                      background-color: #e8f0fe;
+                      color: #1e2a3a;
+                      font-size: 1rem;
+                    ">
+                  <!-- CHANGE LATER -->
+                N/A
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+    {% else %}
+<div class="container mt-4">
+  <div class="card shadow-sm border-0 text-center p-4"
+       style="border-radius: 14px;">
+    <h5 class="fw-bold mb-2" style="color:#1e2a3a;">
+      No Courses Found
+    </h5>
+    <p class="text-muted mb-0">
+      You are not currently enrolled in any courses.
+    </p>
+  </div>
+</div>
+    {% endif %}
+{% endblock %}
