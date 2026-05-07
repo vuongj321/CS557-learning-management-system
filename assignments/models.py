@@ -22,4 +22,4 @@ class Submission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     submission_text = models.TextField()
-    status = models.CharField(choices=Status.choices, default=Status.PENDING,)
+    status = models.CharField(choices=Status.choices, default=Status.PENDING, max_length=20)
