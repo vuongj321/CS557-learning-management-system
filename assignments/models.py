@@ -1,5 +1,6 @@
 from django.db import models
 from courses.models import Course
+from accounts.models import StudentProfile
 
 
 class Assignment(models.Model):
@@ -11,3 +12,14 @@ class Assignment(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Submission(models.Model):
+    class Status(models.TextChoices):
+        PENDING = 'pending'
+        SUBMITTED = 'submitted'
+        GRADED = 'graded'
+        
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    submission_text = models.TextField()
+    status = models.CharField(choices=Status.choices, default=Status.PENDING,)
