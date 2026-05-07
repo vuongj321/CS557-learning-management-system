@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  <title>Enroll in Course - Learning Management System</title>
+{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center mb-4">
+    <div class="flex-grow-1">
+      <h2 class="fw-bold mb-0" style="color: #1e2a3a;">Available Courses</h2>
+      <p class="text-muted mb-0 mt-1">
+        {% if courses %}
+          {{ courses|length }} course{{ courses|length|pluralize }} available
+        {% else %}
+          No courses available
+        {% endif %}
+      </p>
+    </div>
+  </div>
+  {% if courses %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+      {% for course in courses %}
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0" style="border-radius: 12px; overflow: hidden;">
+            <div style="height: 6px; background: linear-gradient(90deg, #1e2a3a, #4a90d9);"></div>
+            <div class="card-body d-flex flex-column p-4">
+              <div class="d-flex align-items-start justify-content-between mb-2">
+                <h5 class="card-title fw-bold mb-0" style="color: #1e2a3a;">{{ course.name }}</h5>
+                <span class="badge rounded-pill ms-2 flex-shrink-0" style="background-color: #e8f0fe; color: #1e2a3a; font-size: 0.75rem;">{{ course.credits }} cr.</span>
+              </div>
+              <p class="text-muted small mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-person-fill me-1" viewBox="0 0 16 16">
+                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                </svg>
+                {{ course.instructor.user.get_full_name }}
+              </p>
+              {% if course.description %}
+                <p class="card-text text-muted small flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">{{ course.description }}</p>
+              {% else %}
+                <p class="card-text text-muted small fst-italic flex-grow-1">No description provided.</p>
+              {% endif %}
+              <div class="d-flex align-items-center mt-3 pt-3" style="border-top: 1px solid #f0f0f0;">
+                <span class="text-muted small me-auto">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-calendar3 me-1" viewBox="0 0 16 16">
+                    <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z" />
+                    <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 a1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 a1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 a1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 a1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 a1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 a1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 a1 0 0 0 0 2" />
+                  </svg>
+                  {{ course.term }}
+                </span>
+                <a href="{% url 'courses:enroll_course' course.id %}" class="btn btn-sm btn-outline-primary">Enroll</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="text-center py-5">
+      <h3 class="fw-bold mb-3" style="color: #1e2a3a;">No courses available</h3>
+      <p class="text-muted mb-4">There are currently no courses open for enrollment. Please check back later.</p>
+      {% if user.is_instructor %}
+        <a class="btn btn-primary px-4" href="{% url 'courses:create_course' %}">Create a Course</a>
+      {% else %}
+        <a class="btn btn-primary px-4" href="{% url 'courses:enroll_course_list' %}">Enroll in a Course</a>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endblock %}
