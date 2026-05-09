@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Create Assignment - Learning Management System</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex align-items-center mb-4">
+  <div class="flex-grow-1">
+    <h2 class="fw-bold mb-0" style="color: #1e2a3a;">
+      Create Assignment
+    </h2>
+    <p class="text-muted mb-0">
+      Add a new assignment for a course.
+    </p>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <div class="card shadow-sm border-0"
+       style="border-radius: 14px; overflow: hidden;">
+
+    <div style="
+        height: 5px;
+        background: linear-gradient(90deg, #1e2a3a, #4a90d9);
+    "></div>
+
+    <div class="card-body px-4 py-4">
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold" style="color:#1e2a3a;">
+            Course
+          </label>
+          {{ form.course }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold" style="color:#1e2a3a;">
+            Title
+          </label>
+          {{ form.title }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold" style="color:#1e2a3a;">
+            Description
+          </label>
+          {{ form.description }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold" style="color:#1e2a3a;">
+            Due Date
+          </label>
+          {{ form.due_date }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold" style="color:#1e2a3a;">
+            Points Possible
+          </label>
+          {{ form.points_possible }}
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <a href="{% url 'assignment_list' %}"
+             class="btn btn-outline-secondary">
+            Cancel
+          </a>
+
+          <button type="submit"
+                  class="btn text-white"
+                  style="background-color:#1e2a3a;">
+            Create Assignment
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
