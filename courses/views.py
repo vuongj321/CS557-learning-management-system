@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.db.models import F, Count
 
 from accounts.models import InstructorProfile, StudentProfile
 from announcements.forms import AnnouncementForm
@@ -44,7 +45,8 @@ def create_course(request):
     return render(request, 'courses/create_course.html', {'form': form})
 
 def enroll_course_list(request):
-    courses = Course.objects.exclude(students__user=request.user)
+    enrollment_counts = Enrollment.objects.values('course').annotate(count=Count('id')).exclude(course__number_of_seats__lte=F('count'))
+    courses = Course.objects.exclude(students__user=request.user).filter(id__in=[e['course'] for e in enrollment_counts])
 
     return render(request, 'courses/enroll_course_list.html', {'courses': courses})
 
@@ -168,6 +170,7 @@ def manage_enrollments(request, course_id):
 
     context = {
         'course': course,
+        'enrollment_count': enrollments.count(),
         'enrollments': enrollments,
         'available_students': available_students,
     }
