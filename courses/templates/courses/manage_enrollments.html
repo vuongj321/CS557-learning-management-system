@@ -80,7 +80,7 @@
                 <td>{{ student.user.get_full_name }}</td>
                 <td>{{ student.user.email }}</td>
                 <td class="text-end">
-                  <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="handleEnrollmentAction({{ student.id }}, 'enroll')">Enroll</a>
+                  <a href="javascript:void(0);" class="btn btn-primary {% if enrollment_count >= course.number_of_seats %}disabled{% endif %} btn-sm" onclick="handleEnrollmentAction({{ student.id }}, 'enroll')">Enroll</a>
                 </td>
               </tr>
             {% empty %}
