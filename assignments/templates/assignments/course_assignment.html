@@ -49,6 +49,15 @@
               {% if assignment.due_date %}
               <small class="text-muted">Due: {{ assignment.due_date }}</small>
               {% endif %}
+              {% if request.user.role == 'student' %}
+              <div class="mt-2">
+                <a href="{% url 'submit_assignment' assignment.id %}"
+                  class="btn btn-sm text-white"
+                  style="background-color: #1e2a3a;">
+                  Submit
+                </a>
+              </div>
+              {% endif %}
             </div>
             <div class="text-end ms-3 flex-shrink-0">
               <span class="badge rounded-pill px-3 py-2"

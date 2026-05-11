@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Assignment
-from .forms import AssignmentForm
+from .models import Assignment, Submission
+from .forms import AssignmentForm, SubmissionForm
 from courses.models import Course
 
 
@@ -46,4 +46,28 @@ def create_assignment(request):
 
     return render(request, 'assignments/create_assignment.html', {
         'form': form
+    })
+
+
+def submit_assignment(request, assignment_id):
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+    student = request.user.student_profile
+    existing = Submission.objects.filter(assignment=assignment, student=student).first()
+
+    if request.method == 'POST' and not existing:
+        form = SubmissionForm(request.POST)
+        if form.is_valid():
+            submission = form.save(commit=False)
+            submission.assignment = assignment
+            submission.student = student
+            submission.status = Submission.Status.SUBMITTED
+            submission.save()
+            return redirect('course_assignments', course_id=assignment.course.id)
+    else:
+        form = SubmissionForm()
+
+    return render(request, 'assignments/submit_assignment.html', {
+        'form': form,
+        'assignment': assignment,
+        'existing': existing,
     })

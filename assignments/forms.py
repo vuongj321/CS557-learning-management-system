@@ -1,5 +1,5 @@
 from django import forms
-from .models import Assignment
+from .models import Assignment, Submission
 
 class AssignmentForm(forms.ModelForm):
     class Meta:
@@ -25,5 +25,17 @@ class AssignmentForm(forms.ModelForm):
             }),
             'points_possible': forms.NumberInput(attrs={
                 'class': 'form-control'
+            }),
+        }
+
+class SubmissionForm(forms.ModelForm):
+    class Meta:
+        model = Submission
+        fields = ['submission_text']
+        widgets = {
+            'submission_text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 6,
+                'placeholder': 'Write your submission here...'
             }),
         }
