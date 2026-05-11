@@ -27,7 +27,7 @@ def course_assignments(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     assignments = Assignment.objects.filter(course=course)
 
-    return render(request, 'assignments/course_assignments.html', {
+    return render(request, 'assignments/course_assignment.html', {
         'course': course,
         'assignments': assignments
     })
