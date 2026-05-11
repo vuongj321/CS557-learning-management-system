@@ -45,8 +45,12 @@ def create_course(request):
     return render(request, 'courses/create_course.html', {'form': form})
 
 def enroll_course_list(request):
-    enrollment_counts = Enrollment.objects.values('course').annotate(count=Count('id')).exclude(course__number_of_seats__lte=F('count'))
-    courses = Course.objects.exclude(students__user=request.user).filter(id__in=[e['course'] for e in enrollment_counts])
+    courses = (
+        Course.objects
+        .exclude(students__user=request.user)
+        .annotate(enrolled_count=Count('enrollment'))
+        .filter(enrolled_count__lt=F('number_of_seats'))
+    )
 
     return render(request, 'courses/enroll_course_list.html', {'courses': courses})
 
