@@ -1,75 +1,103 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    <title>Grades for {{ course.name }} - Learning Management System</title>
+<title>Grades for {{ course.name }} - Learning Management System</title>
 {% endblock %}
 
 {% block content %}
-    <div class="d-flex align-items-center mb-4">
-        <div class="flex-grow-1">
-            <h2 class="fw-bold mb-0" style="color: #1e2a3a;">Grades for {{ student }}</h2>
-        </div>
+<div class="d-flex align-items-center mb-4">
+    <div class="flex-grow-1">
+        <h2 class="fw-bold mb-0" style="color: #1e2a3a;">
+            Grades for {{ course.name }}
+        </h2>
     </div>
-{% if assignment_grades %}
-<div class="container mt-4">
-    <div class="row g-3">
-        {% for item in assignment_grades %}
-        <div class="col-12">
-            <div class="card shadow-sm border-0"
-                 style="border-radius: 14px; overflow: hidden;">
-                <!-- top accent bar -->
-                <div style="
-                    height: 5px;
-                    background: linear-gradient(90deg, #1e2a3a, #4a90d9);
-                "></div>
-                <div class="card-body d-flex justify-content-between align-items-center px-4 py-3">
-                    <!-- left side -->
-                    <div>
-                        <h4 class="fw-bold mb-1"
-                            style="color: #1e2a3a;">
-                            {{ item.assignment.title }}
-                        </h4>
-                    </div>
-                    <!-- right side -->
-                    <div class="text-end">
-                        <p class="text-muted small mb-1">
-                            Grade
-                        </p>
-                        <span class="badge rounded-pill px-3 py-2"
-                              style="
-                                background-color: #e8f0fe;
-                                color: #1e2a3a;
-                                font-size: 1rem;
-                              ">
-                            {% if item.grade %}
-                                {{ item.grade.points_earned }}
-                                /
-                                {{ item.assignment.points_possible }}
-                            {% else %}
-                                Not Graded
-                            {% endif %}
-                        </span>
+</div>
+
+{# ================= STUDENT VIEW ================= #}
+{% if not is_instructor %}
+    {% if assignment_grades %}
+    <div class="container mt-4">
+        <div class="row g-3">
+            {% for item in assignment_grades %}
+            <div class="col-12">
+                <div class="card shadow-sm border-0"
+                     style="border-radius: 14px; overflow: hidden;">
+                    <!-- top accent bar -->
+                    <div style="height: 5px; background: linear-gradient(90deg, #1e2a3a, #4a90d9);"></div>
+                    <div class="card-body d-flex justify-content-between align-items-center px-4 py-3">
+                        <!-- left -->
+                        <div>
+                            <h4 class="fw-bold mb-1" style="color: #1e2a3a;">
+                                {{ item.assignment.title }}
+                            </h4>
+                        </div>
+                        <!-- right -->
+                        <div class="text-end">
+                            <p class="text-muted small mb-1">Grade</p>
+                            <span class="badge rounded-pill px-3 py-2"
+                                  style="background-color: #e8f0fe; color: #1e2a3a; font-size: 1rem;">
+                                {% if item.submission and item.submission.status == "graded" and item.grade %}
+                                    {{ item.grade.score }} / {{ item.assignment.points_possible }}
+                                {% elif item.submission and item.submission.status == "submitted" %}
+                                    Submitted
+                                {% else %}
+                                    Not Submitted
+                                {% endif %}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-
-        {% endfor %}
-
     </div>
-</div>
+    {% else %}
+    <div class="container mt-4">
+        <div class="card shadow-sm border-0 text-center p-4"
+             style="border-radius: 14px;">
+            <h5 class="fw-bold mb-2" style="color:#1e2a3a;">
+                No Assignments Found
+            </h5>
+        </div>
+    </div>
+    {% endif %}
+
+{# ================= INSTRUCTOR VIEW ================= #}
 {% else %}
-<div class="container mt-4">
-    <div class="card shadow-sm border-0 text-center p-4"
-         style="border-radius: 14px;">
-        <h5 class="fw-bold mb-2"
-            style="color:#1e2a3a;">
-            No Assignments Found
-        </h5>
-        <p class="text-muted mb-0">
-            There are currently no assignments for this course.
-        </p>
+    <div class="container mt-4">
+        {% for submission in submissions %}
+        <div class="card shadow-sm border-0 mb-3"
+             style="border-radius: 14px; overflow: hidden;">
+            <div style="height: 5px; background: linear-gradient(90deg, #1e2a3a, #4a90d9);"></div>
+            <div class="card-body px-4 py-3">
+                <h4 class="fw-bold mb-1" style="color:#1e2a3a;">
+                    {{ submission.assignment.title }}
+                </h4>
+                <p class="text-muted mb-1">
+                    Student: {{ submission.student.user.username }}
+                </p>
+                <p class="mb-2">
+                    {{ submission.submission_text }}
+                </p>
+                <p class="small text-muted mb-2">
+                    Status: {{ submission.status }}
+                </p>
+                {% if submission.status == "graded" %}
+                    <span class="badge bg-success">
+                        {{ submission.grade.score }} / {{ submission.assignment.points_possible }}
+                    </span>
+                {% else %}
+                    <a href="{% url 'grades:grade_submission' submission.id %}"
+                       class="btn btn-primary btn-sm">
+                        Grade
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+            <p>No submissions yet.</p>
+        {% endfor %}
     </div>
-</div>
 {% endif %}
+
 {% endblock %}
