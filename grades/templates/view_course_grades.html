@@ -7,9 +7,13 @@
 {% block content %}
 <div class="d-flex align-items-center mb-4">
     <div class="flex-grow-1">
-        <h2 class="fw-bold mb-0" style="color: #1e2a3a;">
-            Grades for {{ course.name }}
+        <a href="{% url 'grades:grades' %}" class="text-muted text-decoration-none small">
+            &larr; Back to Grades
+        </a>
+        <h2 class="fw-bold mb-0 mt-1" style="color: #1e2a3a;">
+            {{ course.name }}
         </h2>
+        <p class="text-muted mb-0">{{ course.term }}</p>
     </div>
 </div>
 

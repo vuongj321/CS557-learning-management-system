@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1f63d941-d81f-4001-a33a-f78c549230b1" name="Changes" comment="committing migrations">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+    <list default="true" id="1f63d941-d81f-4001-a33a-f78c549230b1" name="Changes" comment="implemented course grades">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/layout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grades/templates/view_course_grades.html" beforeDir="false" afterPath="$PROJECT_DIR$/grades/templates/view_course_grades.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grades/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/grades/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grades/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/grades/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grades/templates/viewgrades.html" beforeDir="false" afterPath="$PROJECT_DIR$/grades/templates/viewgrades.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,24 +47,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Django Server.CS557-learning-management-system.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "meghan",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Django Server.CS557-learning-management-system.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#10 on grades-meg&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="CS557-learning-management-system" type="Python.DjangoServer" factoryName="Django server">
       <module name="CS557-learning-management-system" />
@@ -125,6 +121,8 @@
       <workItem from="1778381664994" duration="5922000" />
       <workItem from="1778391412148" duration="1133000" />
       <workItem from="1778470042973" duration="305000" />
+      <workItem from="1778531670082" duration="116000" />
+      <workItem from="1778534970481" duration="1779000" />
     </task>
     <task id="LOCAL-00001" summary="started implementing grades for student">
       <option name="closed" value="true" />
@@ -150,7 +148,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778386555140</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="implemented course grades">
+      <option name="closed" value="true" />
+      <created>1778477626960</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1778477626960</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,6 +177,7 @@
     <MESSAGE value="started implementing grades for student" />
     <MESSAGE value="implemented grades for student" />
     <MESSAGE value="committing migrations" />
-    <option name="LAST_COMMIT_MESSAGE" value="committing migrations" />
+    <MESSAGE value="implemented course grades" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented course grades" />
   </component>
 </project>
