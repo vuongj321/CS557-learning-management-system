@@ -1,7 +1,10 @@
+import datetime as dt
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_not_required
 from accounts.forms import EditProfileForm
 from announcements.models import Announcement
+from assignments.models import Assignment
 
 # Create your views here.
 @login_not_required
@@ -18,6 +21,7 @@ def dashboard(request):
             context['enrolled_courses'] = enrolled_courses
             context['enrolled_count'] = enrolled_courses.count()
             context['announcements'] = Announcement.objects.filter(course__in=enrolled_courses).distinct().order_by('-created_at')[:5]
+            context['pending_assignments_count'] = Assignment.objects.filter(course__in=enrolled_courses, due_date__gte=dt.datetime.now()).count()
         elif user.role == 'instructor' and hasattr(user, 'instructor_profile'):
             teaching_courses = user.instructor_profile.course_set.all() if hasattr(user.instructor_profile, 'course_set') else []
             try:
