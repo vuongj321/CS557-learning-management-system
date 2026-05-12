@@ -7,7 +7,7 @@
 {% block content %}
   <div class="d-flex align-items-center mb-4">
     <div class="flex-grow-1">
-      <h2 class="fw-bold mb-0" style="color: #1e2a3a;">Grades for {{ student }}</h2>
+       <h2 class="fw-bold mb-0" style="color: #1e2a3a;">Grades for {{ student }}</h2>
     </div>
   </div>
     {% if courses %}
@@ -15,7 +15,7 @@
   <div class="row g-3">
     {% for course in courses %}
     <div class="col-12">
-      <a href="{% url 'courses:view_course' course.id %}"
+      <a href="{% url 'grades:view_course_grades' course.id %}"
          class="text-decoration-none">
         <div class="card shadow-sm border-0"
              style="border-radius: 14px; overflow: hidden;">
